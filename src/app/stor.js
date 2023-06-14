@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import mainSlice from '../features/main/mainSlice'
+import employeesSlice from '../features/employees/employeesSlice'
+
 
 
 export default configureStore({
   reducer: {
-    main:mainSlice
+    users:employeesSlice
   }
 })
