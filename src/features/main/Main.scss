@@ -1,0 +1,28 @@
+$header-color: rgba(243, 128, 46, 0.634);
+
+.main {
+    width: 100vw;
+    padding: 22px 10px;
+    background-color: $header-color;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 0px 0px 14px 14px;
+
+    &_title {
+        font-size: clamp(10px, 5vw, 45px);
+        cursor: pointer;
+        padding: 5px 1px;
+    }
+
+    &_nav {
+        display: flex;
+        gap: clamp(10px,5vw,100px);
+        align-self: center;
+
+        a {
+            padding: 5px 1px;
+            font-size: clamp(8px, 4vw, 35px);
+        }
+    }
+
+}
