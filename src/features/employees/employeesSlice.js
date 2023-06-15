@@ -3,7 +3,10 @@ import axios from "axios";
 const initialState = {
   loading: false,
   employees: [],
-  eror: ""
+  eror: "",
+  currentPage:1,
+  perPage:4 ,
+  totalPage:0
 };
 
 export const fetchEmployess = createAsyncThunk("employess/fetch", (url) => {
@@ -12,9 +15,21 @@ export const fetchEmployess = createAsyncThunk("employess/fetch", (url) => {
     .then(resp => resp.data.filter(user=>user.name))
 });
 
+
 const empoloyeesSlice = createSlice({
   name: "employees",
   initialState,
+  reducers:{
+    setCurrentPage:(state,action)=>{
+      state.currentPage = action.payload
+    },
+    setPerPage:(state,action)=>{
+      state.perPage = action.payload
+    },
+    setTotalPage:(state,action)=>{
+      state.totalPage = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchEmployess.pending, state => {
       state.loading = true;
@@ -33,3 +48,4 @@ const empoloyeesSlice = createSlice({
 });
 
 export default empoloyeesSlice.reducer;
+export const{setCurrentPage,setPerPage,setTotalPage} = empoloyeesSlice.actions;

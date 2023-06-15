@@ -1,7 +1,55 @@
 .user{
-    padding: 100px 25px;
-    border: 3px dashed black;
+    padding: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    justify-content: center;
     &_block{
-       
+       border: 1px solid black;
+       width: 250px;
+       height: 200px;
+       border-radius: 14px;
+       padding: 15px 5px;
+       cursor: pointer;
+       &_name{
+        text-align: center;
+        padding: 3px;
+        font-size: 25px;
+        font-weight: 900;
+       }
+       &_surname{
+        text-align: center;
+        padding: 5px;
+        font-size: 22px;
+        font-weight: 500;
+       }
+       &_email{
+        text-align: center;
+       }
+       &_position{
+        text-align: center;
+       }
+       hr{
+        width: 80%;
+        margin: auto;
+        padding: 5px;
+       }
     }
+   
+}
+.pages{
+    text-align: center;
+    margin: 15px 0;
+    .page,.current-page{
+        border: 1px solid rgb(53, 13, 13);
+        border-radius: 100%;
+        padding: 5px 10px;
+        margin: 0 10px;
+        cursor: pointer;
+     }
+     .current-page{
+        font-weight: 800;
+        background: salmon;
+        color: beige;
+     } 
 }
