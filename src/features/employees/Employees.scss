@@ -5,6 +5,7 @@
     gap: 1vw;
     justify-content: center;
     &_block{
+      position: relative;
        border: 1px solid black;
        width: 250px;
        height: 200px;
@@ -34,6 +35,13 @@
         margin: auto;
         padding: 5px;
        }
+       &_btn{
+         padding: 2px;
+         position: absolute;
+         bottom: 10px;
+         left: 25px;
+         cursor: pointer;
+       }
     }
    
 }
@@ -52,4 +60,10 @@
         background: salmon;
         color: beige;
      } 
+}
+.loader{
+ text-align: center;
+ padding: 25px;
+ font-size: 22px;
+
 }

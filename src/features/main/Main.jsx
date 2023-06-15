@@ -6,7 +6,7 @@ export default function Main() {
     <header className='main'>
         <h2 className='main_title'><NavLink to='./'>Task</NavLink></h2>
         <div className='main_nav'>
-            <NavLink to="/Employees">Employees</NavLink>
+            <NavLink to="/employees">Employees</NavLink>
             <NavLink to="/Tasks">Tasks</NavLink>
         </div>
     </header>
