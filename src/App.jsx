@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Employees from "./features/employees/Employees.jsx";
 import Main from "./features/main/Main";
-import FormRegister from "./features/formRegister/FormRegister";
+import Person from "./features/person/Person";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Main />
       <Routes>
         <Route path="/employees" element={<Employees />} />
+        <Route path="change/:id" element={<Person />} />
       </Routes>
     </div>
   );

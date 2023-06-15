@@ -1,9 +1,10 @@
 import React, { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { dataCount, fetchEmployess, fetchTotal, setCurrentPage, setTotalPage } from './employeesSlice';
+import { changeData, dataCount, deletePerson, deletePersonData, fetchEmployess, fetchTotal, setCurrentPage, setTotalPage } from './employeesSlice';
 import pagination from '../../helpers/pagination';
 import './Employees.scss'
 import FormRegister from '../formRegister/FormRegister';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Employees() {
@@ -23,9 +24,12 @@ export default function Employees() {
           
      }, [currentPage])
      pagination(pages, pagesCount, currentPage)
-     const handleDelete = () => [
+     const handleDelete = async(id) => {
+          await dispatch(deletePerson(`${id}`))
+         dispatch(deletePersonData(id))
           
-     ]
+     }
+ 
      return (
           <div>
                {users.loading && <h1 className='loader'>loading...</h1>}
@@ -42,7 +46,8 @@ export default function Employees() {
                                         <p className='user_block_email'>email {user.email}</p>
                                         <hr />
                                         <p className='user_block_position'>position {user.position}</p>
-                                        <button onClick={handleDelete} className='user_block_btn'>Delete</button>
+                                        <button onClick={()=>handleDelete(user.id)} className='user_block_btn'>Delete</button>
+                                        <button  className='user_block_change'> <NavLink to={`/change/${user.id}`}>Change</NavLink> </button>
                                    </div>
                               )
                          })}

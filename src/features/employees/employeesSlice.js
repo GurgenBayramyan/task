@@ -10,20 +10,18 @@ const initialState = {
   url:"https://rocky-temple-83495.herokuapp.com/employees",
 };
 
-export const fetchEmployess = createAsyncThunk("employess/fetch", (url) => {
+export const fetchEmployess = createAsyncThunk("employess/fetch", async(url) => {
   return axios
     .get(url)
     .then(resp => resp.data.filter(user=>user.name))
 });
-export const dataCount = createAsyncThunk("dataCount/fetch", (url) => {
+export const dataCount = createAsyncThunk("dataCount/fetch", async(url) => {
   return axios
     .get(url)
     .then(resp => resp.data.filter(user=>user.name))
 });
-export const deletePerson = createAsyncThunk("dataCount/fetch", (url) => {
-  return axios
-    .get(url)
-    .then(resp => resp.data.filter(user=>user.name))
+export const deletePerson = createAsyncThunk("dataCount/fetch", async(id) => {
+  return axios.delete(`https://rocky-temple-83495.herokuapp.com/employees/${id}`)
 });
 
 
@@ -37,6 +35,10 @@ const empoloyeesSlice = createSlice({
     setPerPage:(state,action)=>{
       state.perPage = action.payload
     },
+    deletePersonData:(state,action)=>{
+      state.employees = state.employees.filter(el=>el.id != action.payload);
+      
+    }
     
   },
   extraReducers: (builder) => {
@@ -56,8 +58,9 @@ const empoloyeesSlice = createSlice({
     builder.addCase(dataCount.fulfilled,(state,action)=>{
       state.totalPage = action.payload.length
     })
+  
   }
 });
 
 export default empoloyeesSlice.reducer;
-export const{setCurrentPage,setPerPage,setTotalPage} = empoloyeesSlice.actions;
+export const{setCurrentPage,setPerPage,setTotalPage,deletePersonData} = empoloyeesSlice.actions;

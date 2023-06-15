@@ -17,6 +17,7 @@ const formRegisterSlice = createSlice({
     extraReducers: (builder) => {
        builder.addCase(postData.fulfilled,(state)=>{
             alert("success")
+            window.location.reload(false)
        })
       
     }

@@ -1,0 +1,15 @@
+.person{
+    width: 450px;
+    background: salmon;
+    margin: 10px auto;
+    border-radius:  1%;
+    position: relative;
+    &_name{
+        padding: 5px;
+        margin-left: 12px;
+    }
+    .change{
+        padding: 15px;
+        margin: 15px 35%;
+    }
+}

@@ -8,10 +8,8 @@ import './FormRegister.scss'
 export default function FormRegister() {
     
     const {form} = useSelector(state=>state);
-    const{flag} = form;
     const dispatch = useDispatch();
    
-    console.log(flag)
     const onSubmit = (values,{resetForm}) => {
         dispatch(postData({...values}))
         resetForm();
