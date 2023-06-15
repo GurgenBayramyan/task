@@ -32,7 +32,7 @@ export default function TaskForm() {
     dispatch(createTask(taskData));
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form  className="task-form" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="name">Name</label>
         <input

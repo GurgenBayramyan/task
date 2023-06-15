@@ -12,9 +12,10 @@ function App() {
       <Main />
       <Routes>
         <Route path="/employees" element={<Employees />} />
+        <Route path="/tasks" element={<CreateTask />} />
         <Route path="change/:id" element={<Person />} />
       </Routes>
-      <CreateTask />
+      
     </div>
   );
 }
