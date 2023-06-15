@@ -2,24 +2,28 @@ import React, { useEffect } from 'react'
 import './Person.scss'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeData, getData } from './personSlice';
+import { changeData, getData, pushBody } from './personSlice';
 export default function Person() {
-  const { person } = useSelector(state => state)
+  const { loading,error} = useSelector(state => state)
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData(id))
-  }, [])
+  }, [dispatch, id])
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const{name,email,surname,position} = event.target;
-    const body = {
+    const change = {
       name:name.value,
       email:email.value,
       surname:surname.value,
       position:position.value
     }
-    dispatch(changeData(id,body))
+    
+    dispatch(pushBody(change));
+
+    dispatch(changeData({ id, body: change }));
     
   }
   return (
@@ -46,9 +50,9 @@ export default function Person() {
         <input type="position" id='position' name='position' />
 
       </div>
-
+      {loading ? 'Updating...' : null}
       <input className='change' type="submit" value="change" />
-
+      {error && <p>{error}</p>}
     </form>
   )
 }
