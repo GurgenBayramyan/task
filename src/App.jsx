@@ -3,8 +3,12 @@ import "./App.css";
 import Employees from "./features/employees/Employees.jsx";
 import Main from "./features/main/Main";
 import Person from "./features/person/Person";
-import TaskForm from "./features/taskForm/TaskForm.jsx";
-import CreateTask from "./features/taskForm/TaskPage";
+import Task from "./pages/tasks/Task";
+import ChangeUser from "./features/changeusers/ChangeUser";
+
+
+
+
 
 function App() {
   return (
@@ -12,10 +16,12 @@ function App() {
       <Main />
       <Routes>
         <Route path="/employees" element={<Employees />} />
-        <Route path="/tasks" element={<CreateTask />} />
-        <Route path="change/:id" element={<Person />} />
+        <Route path="/tasks" element={<Task />} />
+        <Route path="/change/:id" element={<Person />} />
+        <Route path="/person/:id"  element={<ChangeUser />} />
       </Routes>
-      
+     
+    
     </div>
   );
 }

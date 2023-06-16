@@ -1,17 +1,16 @@
 import React, { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeData, dataCount, deletePerson, deletePersonData, fetchEmployess, fetchTotal, setCurrentPage, setTotalPage } from './employeesSlice';
+import { dataCount, deletePerson, deletePersonData, fetchEmployess,  setCurrentPage,  } from './employeesSlice';
 import pagination from '../../helpers/pagination';
 import './Employees.scss'
-import FormRegister from '../formRegister/FormRegister';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useNavigate } from 'react-router-dom';
+import FormRegister from '../formRegister/FormRegister'
 
 export default function Employees() {
      const { users } = useSelector(state => state)
-     const { currentPage, perPage, totalPage, url, test } = users;
+     const { currentPage, perPage, totalPage, url} = users;
      const pagesCount = Math.ceil(totalPage / perPage);
-
+     const navigate = useNavigate();
      const pages = [];
 
      const dispatch = useDispatch();
@@ -24,12 +23,14 @@ export default function Employees() {
           
      }, [currentPage])
      pagination(pages, pagesCount, currentPage)
-     const handleDelete = async(id) => {
-          await dispatch(deletePerson(`${id}`))
+     const handleDelete = (id) => {
+         dispatch(deletePerson(id))
          dispatch(deletePersonData(id))
           
      }
- 
+     const handleClik = (id) =>{
+          navigate(`/person/${id}`)
+     }
      return (
           <div>
                {users.loading && <h1 className='loader'>loading...</h1>}
@@ -38,12 +39,12 @@ export default function Employees() {
                     <div className='user'>
                          {users.employees.map(user => {
                               return (
-                                   <div key={user.id} className='user_block'>
-                                        <h3 className='user_block_name'>name {user.name}</h3>
+                                   <div  key={user.id} className='user_block'>
+                                        <h3  onClick={()=>handleClik(user.id)}className='user_block_name'>name {user.name}</h3>
                                         <hr />
-                                        <h3 className='user_block_surname'>surname {user.surname}</h3>
+                                        <h3  onClick={()=>handleClik(user.id)} className='user_block_surname'>surname {user.surname}</h3>
                                         <hr />
-                                        <p className='user_block_email'>email {user.email}</p>
+                                        <p onClick={()=>handleClik(user.id)}     className='user_block_email'>email {user.email}</p>
                                         <hr />
                                         <p className='user_block_position'>position {user.position}</p>
                                         <button onClick={()=>handleDelete(user.id)} className='user_block_btn'>Delete</button>
@@ -60,7 +61,7 @@ export default function Employees() {
                          )
                     })}
                </div>
-              <FormRegister />
+               <FormRegister />
           </div>
      )
 }

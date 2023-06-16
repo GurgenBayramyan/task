@@ -5,7 +5,7 @@ const initialState = {
   employees: [],
   eror: "",
   currentPage:1,
-  perPage:10 ,
+  perPage:5 ,
   totalPage:0,
   url:"https://rocky-temple-83495.herokuapp.com/employees",
 };
@@ -13,7 +13,7 @@ const initialState = {
 export const fetchEmployess = createAsyncThunk("employess/fetch", async(url) => {
   return axios
     .get(url)
-    .then(resp => resp.data.filter(user=>user.name))
+    .then(resp => resp.data)
 });
 export const dataCount = createAsyncThunk("dataCount/fetch", async(url) => {
   return axios
@@ -37,7 +37,6 @@ const empoloyeesSlice = createSlice({
     },
     deletePersonData:(state,action)=>{
       state.employees = state.employees.filter(el=>el.id != action.payload);
-      
     }
     
   },

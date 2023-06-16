@@ -1,0 +1,39 @@
+.email-details {
+    margin-bottom: 20px;
+  
+    .label {
+      font-weight: bold;
+      color: #333;
+      margin-right: 5px;
+    }
+  
+    .value {
+      color: #555;
+    }
+  }
+  
+  .email-details .email {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .email-details .id {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 5px;
+  }
+  
+  .email-details .name {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .email-details .position {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .email-details .surname {
+    font-size: 20px;
+    font-style: italic;
+  }

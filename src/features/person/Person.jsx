@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './Person.scss'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeData, getData, pushBody } from './personSlice';
 export default function Person() {
@@ -10,7 +10,7 @@ export default function Person() {
   useEffect(() => {
     dispatch(getData(id))
   }, [dispatch, id])
-  
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const{name,email,surname,position} = event.target;
@@ -24,7 +24,7 @@ export default function Person() {
     dispatch(pushBody(change));
 
     dispatch(changeData({ id, body: change }));
-    
+    navigate("/")
   }
   return (
     <form  onSubmit={handleSubmit} className='person'>

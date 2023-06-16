@@ -1,0 +1,29 @@
+.block{
+  padding: 15px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.task{
+  padding: 10px 5px;
+  border-bottom: 2px solid seagreen;
+  &_name{
+      font-weight: 800;
+      font-size: 18px;
+  }
+  &_desc{
+    font-size: 12px;
+    width: max-content;
+    padding: 15px 0;
+  }
+  
+  &_date{
+    color: red;
+    
+  }
+  &_id{
+    padding: 15px 0px;
+    
+  }
+}

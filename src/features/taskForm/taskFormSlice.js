@@ -12,6 +12,8 @@ export const createTask = createAsyncThunk('tasks/createTask', async (taskData) 
   return response.data;
 });
 
+
+
 const taskFormSlice = createSlice({
   name: "tasks",
   initialState: {
@@ -40,6 +42,8 @@ const taskFormSlice = createSlice({
       })
       .addCase(createTask.fulfilled, state => {
         state.loading = false;
+        window.location.reload(false)
+        alert("success")
       })
       .addCase(createTask.rejected, (state, action) => {
         state.loading = false;
