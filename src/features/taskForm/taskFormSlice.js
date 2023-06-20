@@ -43,7 +43,6 @@ const taskFormSlice = createSlice({
       .addCase(createTask.fulfilled, state => {
         state.loading = false;
         window.location.reload(false)
-        alert("success")
       })
       .addCase(createTask.rejected, (state, action) => {
         state.loading = false;

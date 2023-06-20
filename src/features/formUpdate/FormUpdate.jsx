@@ -1,22 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {ErrorMessage, Field, Form, Formik,} from 'formik'
-import {useDispatch} from 'react-redux'
-import {initial, validationSchema} from '../../helpers/formData'
-import './FormRegister.scss'
-import {addEmployee} from "../employees/employeesSlice";
+import {validationSchema} from '../../helpers/formData'
+import './FormUpdate.scss'
 
-export default function FormRegister({onSubmit: handleUpdateData}) {
-    const dispatch = useDispatch();
+export default function FormUpdate({employee, onUpdate}) {
+    const [user, setUser] = useState(employee)
 
-    const onSubmit = (values, {resetForm}) => {
-        dispatch(addEmployee({...values}))
-        resetForm();
-    }
+    useEffect(() => {
+        setUser(employee)
+    }, [employee])
 
     return (
         <Formik
-            initialValues={initial}
-            onSubmit={onSubmit}
+            initialValues={user}
+            enableReinitialize={true}
+            onSubmit={onUpdate}
             validateOnBlur={true}
             validateOnChange={true}
             validationSchema={validationSchema}
@@ -46,7 +44,7 @@ export default function FormRegister({onSubmit: handleUpdateData}) {
                                 <Field type="position" id='position' name='position'/>
                                 <ErrorMessage name='email' component="p"/>
                             </div>
-                            <input type="submit" value="Register"/>
+                            <input className='change' type="submit" value="change"/>
                         </Form>
                     </div>
                 )

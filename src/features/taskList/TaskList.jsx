@@ -1,58 +1,79 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTask, deleteTaskData, fetchTasks, setCurrentPage, taskCount } from './taskSlice';
+import { deleteTask,  fetchTasks, setCurrentPage, taskCount, updateTasks } from './taskSlice';
 import pagination from '../../helpers/pagination';
+import TaskForm from '../taskForm/TaskForm'
 import './TaskList.scss'
+
 export default function TaskList() {
   const { myTasks } = useSelector(state => state)
-  const { currentPage, perPage, totalPage, url } = myTasks;
+  const { currentPage, perPage, totalPage, url, loading, tasks, isUpdating, eror } = myTasks;
   const pagesCount = Math.ceil(totalPage / perPage);
   const pages = [];
-
   const dispatch = useDispatch();
+  const [userTask, setUserTask] = useState({})
 
   useEffect(() => {
     dispatch(taskCount(url))
   }, [])
 
-  useEffect(() => {
+  const getUserTasks = () => {
     dispatch(fetchTasks(`${url}?_page=${currentPage}&_limit=${perPage}`))
-
-  }, [currentPage])
-  pagination(pages, pagesCount, currentPage)
-  const handleClik = (id) => {
-    dispatch(deleteTask(`${id}`))
-    dispatch(deleteTaskData(id))
   }
+
+  useEffect(() => {
+    isUpdating && getUserTasks()
+  }, [isUpdating])
+
+
+  const onSubmit = () => getUserTasks()
+
+  pagination(pages, pagesCount, currentPage)
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id))
+}
+const handleUpdate = (task) => {
+  setUserTask(task)
+}
+const onUpdate = (values) => {
+  dispatch(updateTasks({id: userTask.id, body: {...values, id: undefined}}));
+  setUserTask({})
+}
   
+
+  
+
   return (
     <div>
-      {myTasks.loading && <h1 className='loader'>loading...</h1>}
-      {!myTasks.loading && myTasks.eror ? <p>eror {myTasks.eror}</p> : null}
-      {!myTasks.loading && myTasks.tasks.length ? (
+      {loading && <h1 className='loader'>loading...</h1>}
+      {!loading && eror ? <p>eror {eror}</p> : null}
+      {!loading && tasks.length ? (
         <div className='block'>
-          {myTasks.tasks.map(tasks => {
+          {tasks.map(tasks => {
             return (
               <div className='task' key={tasks.id}>
-                <h3  className='task_name'> {tasks.name}</h3>
+                <h3 className='task_name'> {tasks.name}</h3>
 
                 <p className='task_desc'> {tasks.description}</p>
                 <span className='task_date'>{tasks.startDate} - {tasks.endDate}</span>
 
                 <p className='task_id' >user Id {tasks.employeeId}</p>
-                <button onClick={()=>handleClik(tasks.id)}>delete</button>
+                <button onClick={() => handleDelete(tasks.id)}>delete</button>
               </div>
             )
           })}
         </div>
       ) : null}
       <div className='pages'>
-        {pages.map((el, index) => {
-          return (
-            <span onClick={() => dispatch(setCurrentPage(el))} key={crypto.randomUUID().slice(15)} className={currentPage == el ? "current-page" : "page"}>{el}</span>
-          )
-        })}
-      </div>
+                {pages.map((el, index) => (
+                    <span onClick={() => dispatch(setCurrentPage(el))} key={crypto.randomUUID().slice(15)}
+                        className={currentPage === el ? "current-page" : "page"}>{el}</span>
+                ))}
+            </div>
+                  
+      <TaskForm  onSubmit={onSubmit}/>
+        
     </div>
   )
 }

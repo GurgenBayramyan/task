@@ -13,3 +13,10 @@ export const initial ={
     email:""
     
 }
+export const initialTask = {
+    name:"",
+    description:"",
+    startDate:"",
+    endDate:"",
+    employeeId:""
+}
