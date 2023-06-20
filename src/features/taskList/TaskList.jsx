@@ -26,6 +26,7 @@ export default function TaskList() {
 
   useEffect(() => {
     isUpdating && getUserTasks()
+    dispatch(taskCount(url))
   }, [isUpdating])
 
 

@@ -86,6 +86,10 @@ const tasksSlice = createSlice({
         })
         builder.addCase(deleteTask.fulfilled, (state, aciiton) => {
             state.isUpdating = true;
+            if(state.tasks.length === 1){
+                state.currentPage = state.currentPage - 1
+            }
+            
         })
         builder.addCase(updateTasks.fulfilled,(state)=>{
             state.isUpdating = true;

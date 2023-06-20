@@ -6,14 +6,16 @@ import pagination from '../../helpers/pagination';
 import './Employees.scss'
 import FormRegister from '../formRegister/FormRegister'
 import Modal from '../modal/Modal';
-import UserTasks from '../userTasks/UserTasks';
+
 
 export default function Employees() {
     const[isActive,setActive] = useState(false)
-    const [modalTask,setModalTask] = useState(false)
+    const [id, setId] = useState(null);
+
     const { users } = useSelector(state => state)
-    const { currentPage, perPage, totalPage, url, loading, employees, isUpdating } = users;
+    const { currentPage, perPage, totalPage, url, loading, employees, isUpdating,modal } = users;
     let pagesCount = Math.ceil(totalPage / perPage);
+
     const navigate = useNavigate();
     const pages = [];
     const dispatch = useDispatch();
@@ -22,6 +24,11 @@ export default function Employees() {
         dispatch(dataCount(url));
         
     }, [])
+    useEffect(()=>{
+        dispatch(getEmployTask(id))
+    },[id])
+
+    
 
     const getEmployees = () => {
         dispatch(fetchEmployess(`${url}?_page=${currentPage}&_limit=${perPage}`))
@@ -33,7 +40,7 @@ export default function Employees() {
         
         
     }, [isUpdating])
-
+    
     const onSubmit = () => getEmployees()
 
     pagination(pages, pagesCount, currentPage)
@@ -56,7 +63,9 @@ export default function Employees() {
         setUser({})
         setActive(false)
     }
-
+    const handleTask = (id) =>{
+       
+    }
     return (
         <div>
             
@@ -81,8 +90,9 @@ export default function Employees() {
                             <p className='user_block_position'>position {user.position}</p>
                             <button onClick={() => handleDelete(user.id)} className='user_block_btn'>Delete</button>
                             <button className='user_block_change' onClick={() => handleUpdate(user)}>Change</button>
-                            <button  className='user_block_set' >tasks</button>
-                            
+                            <button  onClick={()=>{ 
+                                setId(user.id)}} className='user_block_set' >tasks</button>
+                           {user.id===id && modal.length && <pre>{JSON.stringify(modal,undefined,6)}</pre>}
                         </div>
                     ))}
                 </div>

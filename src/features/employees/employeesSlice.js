@@ -8,7 +8,7 @@ const initialState = {
     employees: [],
     eror: "",
     currentPage: 1,
-    perPage: 2,
+    perPage: 4,
     totalPage: 0,
     modal:[],
     url: "https://rocky-temple-83495.herokuapp.com/employees",
@@ -94,6 +94,9 @@ const empoloyeesSlice = createSlice({
         });
         builder.addCase(deletePerson.fulfilled, (state) => {
             state.isUpdating = true;
+            if(state.employees.length === 1){
+                state.currentPage = state.currentPage - 1
+            }
         });
         builder.addCase(updateEmployee.fulfilled, (state) => {
             state.isUpdating = true;
@@ -101,6 +104,9 @@ const empoloyeesSlice = createSlice({
         builder.addCase(getEmployee.fulfilled, (state, {payload}) => {
             state.person = payload;
         });
+        builder.addCase(getEmployTask.pending,(state)=>{
+            state.modal = []
+        })
         builder.addCase(getEmployTask.fulfilled,(state,{payload})=>{
             state.modal = payload
         })

@@ -8,7 +8,7 @@
       position: relative;
        border: 1px solid black;
        width: 250px;
-       height: 200px;
+       height: max-content;
        border-radius: 14px;
        padding: 15px 5px;
        cursor: pointer;
@@ -30,7 +30,7 @@
        &_position{
         text-align: center;
        }
-       
+      
        hr{
         width: 80%;
         margin: auto;
