@@ -9,6 +9,7 @@ export default configureStore({
         users: employeesSlice,
         tasks: taskFormSlice,
         myTasks: taskSlice,
-        search: searchSlice
+        search: searchSlice,
+       
     }
 })

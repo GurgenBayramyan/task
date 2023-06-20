@@ -30,6 +30,7 @@
        &_position{
         text-align: center;
        }
+       
        hr{
         width: 80%;
         margin: auto;
@@ -47,6 +48,13 @@
         position: absolute;
         bottom: 10px;
         right: 25px;
+        cursor: pointer;
+       }
+       &_set{
+        padding: 2px;
+        position: absolute;
+        bottom: 10px;
+        right: 110px;
         cursor: pointer;
        }
     }

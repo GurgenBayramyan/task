@@ -3,12 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom'
 import './ChangeUser.scss'
 import {getEmployee} from "../employees/employeesSlice";
+import UserTasks from '../userTasks/UserTasks';
 
 export default function ChangeUser() {
     const {id} = useParams();
     const {person} = useSelector(state => state.users);
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
         dispatch(getEmployee(id))
     }, [])
@@ -30,7 +31,7 @@ export default function ChangeUser() {
 
                 <p className="label">Position:</p>
                 <p className="value position">{person.position}</p>
-
+                <UserTasks bool={false} index={id}/>
             </div>
 
         </div>

@@ -8,15 +8,16 @@ const initialState = {
     employees: [],
     eror: "",
     currentPage: 1,
-    perPage: 5,
+    perPage: 2,
     totalPage: 0,
+    modal:[],
     url: "https://rocky-temple-83495.herokuapp.com/employees",
 };
 
 export const fetchEmployess = createAsyncThunk("employess/fetch", async (url) => {
-    return axios
-        .get(url)
-        .then(resp => resp.data)
+    const data =  await axios.get(url).then(resp => resp.data);
+    return data
+    
 });
 
 export const dataCount = createAsyncThunk("dataCount/fetch", async (url) => {
@@ -47,6 +48,10 @@ export const getEmployee = createAsyncThunk("data/fetch", async (id) => {
     const res = await axios.get(`https://rocky-temple-83495.herokuapp.com/employees/${id}`);
     return res.data
 });
+export const getEmployTask = createAsyncThunk("employee/getTask",async(id)=>{
+    const res = await axios.get(`https://rocky-temple-83495.herokuapp.com/tasks?employeeId=${id}`);
+    return res.data
+})
 
 const empoloyeesSlice = createSlice({
     name: "employees",
@@ -57,8 +62,10 @@ const empoloyeesSlice = createSlice({
             state.currentPage = action.payload
         },
         setPerPage: (state, action) => {
+            state.isUpdating = true
             state.perPage = action.payload
         },
+       
 
     },
     extraReducers: (builder) => {
@@ -79,6 +86,9 @@ const empoloyeesSlice = createSlice({
         builder.addCase(dataCount.fulfilled, (state, action) => {
             state.totalPage = action.payload.length
         });
+        builder.addCase(addEmployee.pending,(state)=>{
+            state.isUpdating = false
+        })
         builder.addCase(addEmployee.fulfilled, (state) => {
             state.isUpdating = true;
         });
@@ -91,8 +101,12 @@ const empoloyeesSlice = createSlice({
         builder.addCase(getEmployee.fulfilled, (state, {payload}) => {
             state.person = payload;
         });
+        builder.addCase(getEmployTask.fulfilled,(state,{payload})=>{
+            state.modal = payload
+        })
     }
 });
 
 export default empoloyeesSlice.reducer;
-export const {setCurrentPage} = empoloyeesSlice.actions;
+export const {setCurrentPage,deletePersons} = empoloyeesSlice.actions;
+

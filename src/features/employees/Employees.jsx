@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { dataCount, deletePerson, fetchEmployess, setCurrentPage, updateEmployee, } from './employeesSlice';
+import { dataCount, deletePerson, fetchEmployess, getEmployTask, setCurrentPage, updateEmployee, } from './employeesSlice';
 import pagination from '../../helpers/pagination';
 import './Employees.scss'
 import FormRegister from '../formRegister/FormRegister'
-import FormUpdate from "../formUpdate/FormUpdate";
+import Modal from '../modal/Modal';
+import UserTasks from '../userTasks/UserTasks';
 
 export default function Employees() {
+    const[isActive,setActive] = useState(false)
+    const [modalTask,setModalTask] = useState(false)
     const { users } = useSelector(state => state)
     const { currentPage, perPage, totalPage, url, loading, employees, isUpdating } = users;
-    const pagesCount = Math.ceil(totalPage / perPage);
+    let pagesCount = Math.ceil(totalPage / perPage);
     const navigate = useNavigate();
     const pages = [];
     const dispatch = useDispatch();
     const [user, setUser] = useState({})
-
     useEffect(() => {
         dispatch(dataCount(url));
+        
     }, [])
 
     const getEmployees = () => {
@@ -26,6 +29,9 @@ export default function Employees() {
 
     useEffect(() => {
         isUpdating && getEmployees()
+        dispatch(dataCount(url));
+        
+        
     }, [isUpdating])
 
     const onSubmit = () => getEmployees()
@@ -40,16 +46,20 @@ export default function Employees() {
     }
 
     const handleUpdate = (user) => {
+        setActive(!isActive)
         setUser(user)
     }
+    
 
     const onUpdate = (values) => {
         dispatch(updateEmployee({ id: user.id, body: { ...values, id: undefined } }));
         setUser({})
+        setActive(false)
     }
 
     return (
         <div>
+            
             {loading && <h1 className='loader'>loading...</h1>}
 
             {!loading && users.eror ? <p>error {users.eror}</p> : null}
@@ -57,19 +67,22 @@ export default function Employees() {
             {!loading && employees.length ? (
                 <div className='user'>
                     {employees.map(user => (
-                        <div key={user.id} className='user_block'>
+                        <div  key={user.id} className='user_block'>
                             <h3 onClick={() => handleClick(user.id)}
                                 className='user_block_name'>name {user.name}</h3>
                             <hr />
                             <h3 onClick={() => handleClick(user.id)}
                                 className='user_block_surname'>surname {user.surname}</h3>
                             <hr />
+                            
                             <p onClick={() => handleClick(user.id)}
                                 className='user_block_email'>email {user.email}</p>
                             <hr />
                             <p className='user_block_position'>position {user.position}</p>
                             <button onClick={() => handleDelete(user.id)} className='user_block_btn'>Delete</button>
                             <button className='user_block_change' onClick={() => handleUpdate(user)}>Change</button>
+                            <button  className='user_block_set' >tasks</button>
+                            
                         </div>
                     ))}
                 </div>
@@ -81,9 +94,9 @@ export default function Employees() {
                         className={currentPage === el ? "current-page" : "page"}>{el}</span>
                 ))}
             </div>
-            {!!Object.keys(user).length && <FormUpdate employee={user} onUpdate={onUpdate} />}
-
+            
             <FormRegister onSubmit={onSubmit} />
+            <Modal onUpdate={onUpdate}  employee={user} isActive={isActive} setActive={setActive} />
         </div>
     )
 }

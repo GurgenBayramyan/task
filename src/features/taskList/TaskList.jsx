@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTask,  fetchTasks, setCurrentPage, taskCount, updateTasks } from './taskSlice';
+import { deleteTask, fetchTasks, setCurrentPage, taskCount, updateTasks } from './taskSlice';
 import pagination from '../../helpers/pagination';
 import TaskForm from '../taskForm/TaskForm'
 import './TaskList.scss'
+import Modal from '../modal/Modal';
+import TaskModal from '../TaskModal/TaskModal';
 
 export default function TaskList() {
   const { myTasks } = useSelector(state => state)
+  const [isActive, setActive] = useState(false)
   const { currentPage, perPage, totalPage, url, loading, tasks, isUpdating, eror } = myTasks;
   const pagesCount = Math.ceil(totalPage / perPage);
   const pages = [];
@@ -29,20 +32,22 @@ export default function TaskList() {
   const onSubmit = () => getUserTasks()
 
   pagination(pages, pagesCount, currentPage)
-
+  
   const handleDelete = (id) => {
     dispatch(deleteTask(id))
-}
-const handleUpdate = (task) => {
-  setUserTask(task)
-}
-const onUpdate = (values) => {
-  dispatch(updateTasks({id: userTask.id, body: {...values, id: undefined}}));
-  setUserTask({})
-}
-  
+  }
+  const handleUpdate = (task) => {
+    setActive(!isActive)
+    setUserTask(task)
+  }
+  const onUpdate = (values) => {
+    dispatch(updateTasks({ id: userTask.id, body: { ...values, id: undefined } }));
+    setUserTask({})
+    setActive(false)
+  }
 
-  
+
+
 
   return (
     <div>
@@ -60,20 +65,21 @@ const onUpdate = (values) => {
 
                 <p className='task_id' >user Id {tasks.employeeId}</p>
                 <button onClick={() => handleDelete(tasks.id)}>delete</button>
+                <button  onClick={() => handleUpdate(tasks)}>Change</button>
               </div>
             )
           })}
         </div>
       ) : null}
       <div className='pages'>
-                {pages.map((el, index) => (
-                    <span onClick={() => dispatch(setCurrentPage(el))} key={crypto.randomUUID().slice(15)}
-                        className={currentPage === el ? "current-page" : "page"}>{el}</span>
-                ))}
-            </div>
-                  
-      <TaskForm  onSubmit={onSubmit}/>
-        
+        {pages.map((el, index) => (
+          <span onClick={() => dispatch(setCurrentPage(el))} key={crypto.randomUUID().slice(15)}
+            className={currentPage === el ? "current-page" : "page"}>{el}</span>
+        ))}
+      </div>
+
+      <TaskForm onSubmit={onSubmit} />
+      <TaskModal onUpdate={onUpdate} taskObj={userTask} isActive={isActive} setActive={setActive} />
     </div>
   )
 }

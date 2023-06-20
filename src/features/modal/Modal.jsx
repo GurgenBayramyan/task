@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {ErrorMessage, Field, Form, Formik,} from 'formik'
 import {validationSchema} from '../../helpers/formData'
-import './FormUpdate.scss'
-
-export default function FormUpdate({employee, onUpdate}) {
-    const [user, setUser] = useState(employee)
-    
-    useEffect(() => {
+import './Modal.scss'
+export default function Modal({isActive,setActive,onUpdate,employee}) {
+    const[user,setUser] = useState()
+    useEffect(()=>{
         setUser(employee)
-    }, [employee])
-
-    return (
+    })
+   
+  
+  return (
+    <div className={isActive ? "modal isActive" : "modal"} onClick={()=> setActive(!isActive)}> 
+        <div className="modal_contnent" onClick={(e)=>e.stopPropagation()}>
         <Formik
             initialValues={user}
             enableReinitialize={true}
@@ -21,34 +22,37 @@ export default function FormUpdate({employee, onUpdate}) {
         >
             {() => {
                 return (
-                    <div className='form'>
-                        <Form className='form_main'>
-                            <h1>add new Employees</h1>
-                            <div className='form_block'>
-                                <label htmlFor='username'>name</label>
+                        <Form >
+                            <h1>Change  Employees</h1>
+                            <div >
+                                <p>name</p>
                                 <Field type="text" id='name' name='name'/>
                                 <ErrorMessage name='name' component="p"/>
                             </div>
-                            <div className='form_block'>
-                                <label htmlFor='surname'>surname</label>
+                            <div >
+                                 <p>surname</p>
                                 <Field type="surname" id='surname' name='surname'/>
                                 <ErrorMessage name='surname' component='p'/>
                             </div>
-                            <div className='form_block'>
-                                <label htmlFor='email'>email</label>
+                            <div >
+                                <p>email</p>
                                 <Field type="email" id='email' name='email'/>
                                 <ErrorMessage name='email' component="p"/>
                             </div>
-                            <div className='form_block'>
-                                <label htmlFor='position'>position</label>
+                            
+                               <div>
+                                <p>position</p>
                                 <Field type="position" id='position' name='position'/>
                                 <ErrorMessage name='email' component="p"/>
-                            </div>
+                               </div>
+
                             <input className='change' type="submit" value="change"/>
                         </Form>
-                    </div>
                 )
             }}
         </Formik>
-    )
+        
+        </div>  
+    </div>
+  )
 }

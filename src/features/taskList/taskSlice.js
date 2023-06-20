@@ -53,15 +53,14 @@ const tasksSlice = createSlice({
     initialState,
     reducers: {
         setCurrentPage: (state, action) => {
+            state.isUpdating = true
             state.currentPage = action.payload
         },
         setPerPage: (state, action) => {
+            state.isUpdating = true
             state.perPage = action.payload
         },
-        deleteTaskData: (state, action) => {
-            state.employees = state.tasks.filter(el => el.id != action.payload);
-
-        }
+        
 
     },
     extraReducers: (builder) => {
