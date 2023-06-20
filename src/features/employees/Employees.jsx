@@ -63,9 +63,7 @@ export default function Employees() {
         setUser({})
         setActive(false)
     }
-    const handleTask = (id) =>{
-       
-    }
+   
     return (
         <div>
             
@@ -88,11 +86,14 @@ export default function Employees() {
                                 className='user_block_email'>email {user.email}</p>
                             <hr />
                             <p className='user_block_position'>position {user.position}</p>
+                            <hr />
+                            {user.id===id &&  <pre>tasks:{JSON.stringify(modal,undefined,6)}</pre>}
+                            <hr />
                             <button onClick={() => handleDelete(user.id)} className='user_block_btn'>Delete</button>
                             <button className='user_block_change' onClick={() => handleUpdate(user)}>Change</button>
                             <button  onClick={()=>{ 
                                 setId(user.id)}} className='user_block_set' >tasks</button>
-                           {user.id===id && modal.length && <pre>{JSON.stringify(modal,undefined,6)}</pre>}
+                           
                         </div>
                     ))}
                 </div>

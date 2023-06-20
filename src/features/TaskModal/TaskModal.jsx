@@ -24,7 +24,7 @@ export default function TaskModal({isActive,setActive,onUpdate,taskObj}) {
                 return (
                     <Form className='form_for_task'>
                     <div>
-                      <label htmlFor="name">Name</label>
+                      <p>Name</p>
                       <Field
                         type="text"
                         id="name"
@@ -33,11 +33,11 @@ export default function TaskModal({isActive,setActive,onUpdate,taskObj}) {
                       />
                     </div>
                     <div>
-                      <label htmlFor="description">Description</label>
+                    <p>description</p>
                       <Field as="textarea" id="description" name="description" />
                     </div>
                     <div>
-                      <label htmlFor="startDate">Start Date</label>
+                    <p>Start date</p>
                       <Field
                         type="date"
                         id="startDate"
@@ -46,7 +46,7 @@ export default function TaskModal({isActive,setActive,onUpdate,taskObj}) {
                       />
                     </div>
                     <div>
-                      <label htmlFor="endDate">End Date</label>
+                    <p>End date</p>
                       <Field
                         type="date"
                         id="endDate"
@@ -55,9 +55,9 @@ export default function TaskModal({isActive,setActive,onUpdate,taskObj}) {
                       />
                     </div>
                     <div>
-                      <label htmlFor="employeeId">Employee</label>
-                    <Field as="select" id="employeeId" name="employeeId">
-                      <option value="">Select an employee</option>
+                    <p> Employee</p>
+                    <Field   as="select" id="employeeId"  name="employeeId">
+                      <option  value="">Select an employee</option>
                       {users.employees.map(employee => (
                         <option key={employee.id} value={employee.id}>
                           {employee.name}

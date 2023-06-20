@@ -108,7 +108,13 @@ const empoloyeesSlice = createSlice({
             state.modal = []
         })
         builder.addCase(getEmployTask.fulfilled,(state,{payload})=>{
-            state.modal = payload
+            state.loading = false
+            if(payload.length){
+                state.modal = payload
+            }else{
+                state.modal.push("there is no Task")
+            }
+            
         })
     }
 });
